@@ -11,6 +11,10 @@
   font-display: swap;
 }
 
+:root {
+  background-color: black;
+}
+
 @keyframes ken-burns-zoom {
   0% {
     transform: scale(1);

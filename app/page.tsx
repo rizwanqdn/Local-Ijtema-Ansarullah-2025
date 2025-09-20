@@ -187,7 +187,7 @@ export default function Home() {
         
         {/* Fixed Header Content (Always Visible) */}
         <div className="flex flex-col items-center">
-            <h1 className={`text-4xl sm:text-5xl font-extrabold my-1 ${currentTheme.textColor} drop-shadow-lg font-jost`}>Local Ijtema</h1>
+            <h1 className={`text-4xl sm:text-5xl font-extrabold my-1 ${currentTheme.textColor} drop-shadow-lg font-jost`}>Salana Local Ijtema</h1>
             <h1 className={`text-2xl sm:text-3xl font-extrabold mb-2 ${currentTheme.textColor} drop-shadow-lg font-jost`}>Majlis Ansarullah Qadian 2025</h1>
         </div>
 
@@ -209,7 +209,7 @@ export default function Home() {
               </div>
               {/* Urdu Headings */}
               <div className="mt-4">
-                  <h1 style={{ fontFamily: "'Jameel Noori Nastaleeq', sans-serif" }} className={`text-6xl sm:text-7xl font-extrabold my-1 ${currentTheme.textColor} drop-shadow-lg`}>لوکل اجتماع </h1>
+                  <h1 style={{ fontFamily: "'Jameel Noori Nastaleeq', sans-serif" }} className={`text-6xl sm:text-7xl font-extrabold my-1 ${currentTheme.textColor} drop-shadow-lg`}>سالانہ لوکل اجتماع </h1>
                   <h1 style={{ fontFamily: "'Jameel Noori Nastaleeq', sans-serif" }} className={`text-5xl sm:text-6xl font-extrabold my-1 ${currentTheme.textColor} drop-shadow-lg`}>مجلس انصار اللہ قادیان</h1>
                   <h1 className={`text-4xl sm:text-5xl font-extrabold my-1 ${currentTheme.textColor} drop-shadow-lg`}>2025</h1>
               </div>
@@ -228,6 +228,7 @@ export default function Home() {
             <div className="flex-shrink-0 w-full flex flex-col items-center justify-center p-4">
               <h2 className={`text-4xl font-bold ${currentTheme.textColor} mb-6 font-jost`}>Event Details</h2>
               <p className="text-xl sm:text-2xl font-extrabold text-amber-200 mb-2 font-lato">🗓️ Dates: 25 | 26 | 27 | 28 September 2025</p>
+              <p className="font-mono sm:text-2xl text-blue-500 mb-2 font-lato"> Thursday | Friday | Saturday | Sunday</p>
               <p className="text-lg sm:text-xl font-extrabold text-gray-300 mb-6 font-lato">📍 Location: Qadian, Punjab, India</p>
               <p className="text-xl sm:text-xl leading-relaxed text-yellow-300 mb-6 font-lato">Mark your calendars for a weekend of spiritual enlightenment and brotherhood.</p>
             </div>
