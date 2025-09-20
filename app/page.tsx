@@ -4,6 +4,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Countdown from './components/Countdown';
+import ParticlesBackground from './components/ParticlesBackground';
 
 // Define a type for a single theme
 type Theme = {
@@ -16,64 +17,64 @@ type Theme = {
 
 // Define your curated list of modern themes
 const themes: Theme[] = [
-  // A modern, dark indigo theme
+  // A modern, dark indigo theme with glassmorphism
   {
     background: "/backgrounds/background1.jpg",
     borderColor: "border-indigo-400/40",
     textColor: "text-indigo-200",
-    containerGradient: 'bg-gradient-to-br from-indigo-950/50 to-zinc-950/50',
+    containerGradient: 'bg-gradient-to-br from-indigo-950/10 to-zinc-950/10',
     linkHoverBg: 'hover:bg-indigo-700/60',
   },
-  // A sleek, light silver theme
+  // A sleek, light silver theme with glassmorphism
   {
     background: "/backgrounds/background2.jpg",
     borderColor: "border-gray-500/40",
     textColor: "text-gray-300",
-    containerGradient: 'bg-gradient-to-br from-gray-950/50 to-gray-900/50',
+    containerGradient: 'bg-gradient-to-br from-gray-950/10 to-gray-900/10',
     linkHoverBg: 'hover:bg-gray-700/60',
   },
-  // A vibrant, dark teal theme
+  // A vibrant, dark teal theme with glassmorphism
   {
     background: "/backgrounds/background3.jpg",
     borderColor: "border-teal-400/40",
     textColor: "text-teal-200",
-    containerGradient: 'bg-gradient-to-br from-teal-950/50 to-slate-900/50',
+    containerGradient: 'bg-gradient-to-br from-teal-950/10 to-slate-900/10',
     linkHoverBg: 'hover:bg-teal-700/60',
   },
-  // A warm, golden theme
+  // A warm, golden theme with glassmorphism
   {
     background: "/islamic-pattern.jpg",
     borderColor: "border-yellow-300/40",
     textColor: "text-yellow-300",
-    containerGradient: 'bg-gradient-to-br from-amber-950/50 to-stone-900/50',
+    containerGradient: 'bg-gradient-to-br from-amber-950/10 to-stone-900/10',
     linkHoverBg: 'hover:bg-yellow-700/60',
   },
   {
     background: "/backgrounds/background4.jpg",
     borderColor: "border-indigo-400/40",
     textColor: "text-yellow-300",
-    containerGradient: 'bg-gradient-to-br from-indigo-950/50 to-zinc-950/50',
+    containerGradient: 'bg-gradient-to-br from-indigo-950/10 to-zinc-950/10',
     linkHoverBg: 'hover:bg-indigo-700/60',
   },
   {
     background: "/backgrounds/background5.jpg",
     borderColor: "border-indigo-400/40",
     textColor: "text-yellow-300",
-    containerGradient: 'bg-gradient-to-br from-indigo-950/50 to-zinc-950/50',
+    containerGradient: 'bg-gradient-to-br from-indigo-950/10 to-zinc-950/10',
     linkHoverBg: 'hover:bg-indigo-700/60',
   },
   {
     background: "/black-pattern.jpg",
     borderColor: "border-indigo-400/40",
     textColor: "text-yellow-300",
-    containerGradient: 'bg-gradient-to-br from-indigo-950/50 to-zinc-950/50',
+    containerGradient: 'bg-gradient-to-br from-indigo-950/10 to-zinc-950/10',
     linkHoverBg: 'hover:bg-indigo-700/60',
   },
   {
     background: "/white-pattern.jpg",
     borderColor: "border-indigo-400/40",
     textColor: "text-yellow-300",
-    containerGradient: 'bg-gradient-to-br from-indigo-950/50 to-zinc-950/50',
+    containerGradient: 'bg-gradient-to-br from-indigo-950/10 to-zinc-950/10',
     linkHoverBg: 'hover:bg-indigo-700/60',
   },
 ];
@@ -82,11 +83,10 @@ export default function Home() {
   const [currentTheme, setCurrentTheme] = useState<Theme | null>(null);
   const [isMuted, setIsMuted] = useState(true);
   const [cardIndex, setCardIndex] = useState(0);
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-
+  
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const targetDate = new Date('2025-10-24T00:00:00');
+  const targetDate = new Date('2025-09-25T00:00:00');
   const totalCards = 4;
 
   useEffect(() => {
@@ -107,55 +107,20 @@ export default function Home() {
     }
   };
 
-  const handleMainClick = (e: React.MouseEvent) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const clickX = e.clientX - rect.left;
-    
-    // Check if the click is on the navigation arrows or audio button
-    // This prevents accidental clicks on the background when trying to use buttons
-    const isClickOnButton = (target: EventTarget) => {
-        return (target as HTMLElement).tagName === 'BUTTON' || (target as HTMLElement).closest('button');
-    };
-
-    if (isClickOnButton(e.target)) {
-        return;
-    }
-
-    if (clickX < rect.width / 2) {
-      // Clicked on the left side
-      setCardIndex((prevIndex) => (prevIndex - 1 + totalCards) % totalCards);
-    } else {
-      // Clicked on the right side
-      setCardIndex((prevIndex) => (prevIndex + 1) % totalCards);
-    }
-  };
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStart(e.touches[0].clientX);
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStart === null) return;
-    const touchEnd = e.changedTouches[0].clientX;
-    const touchDifference = touchStart - touchEnd;
-    const swipeThreshold = 50;
-
-    if (touchDifference > swipeThreshold) {
-      // Swiped left, go to next card
-      setCardIndex((prevIndex) => (prevIndex + 1) % totalCards);
-    } else if (touchDifference < -swipeThreshold) {
-      // Swiped right, go to previous card
-      setCardIndex((prevIndex) => (prevIndex - 1 + totalCards) % totalCards);
-    }
-
-    setTouchStart(null);
+  const handleNextClick = () => {
+    setCardIndex((prevIndex) => (prevIndex + 1) % totalCards);
   };
   
+  const handleBackClick = () => {
+    setCardIndex((prevIndex) => (prevIndex - 1 + totalCards) % totalCards);
+  };
+
   if (!currentTheme) {
     return null;
   }
 
   const transformValue = `translateX(-${cardIndex * 100}%)`;
+  const isLastCard = cardIndex === totalCards - 1;
 
   return (
     <main className="relative flex min-h-screen flex-col items-center justify-center p-4 text-white text-center font-sans overflow-hidden">
@@ -164,8 +129,11 @@ export default function Home() {
         className="absolute inset-0 z-0 bg-cover bg-center bg-fixed animate-ken-burns" 
         style={{ backgroundImage: `url('${currentTheme.background}')` }}
       >
-        <div className="absolute inset-0 bg-black/50 animate-pulse-subtle"></div>
+        <div className="absolute inset-0 bg-black/70 animate-pulse-subtle"></div> 
       </div>
+
+      {/* Particles Background - positioned above the image and its dimming overlay */}
+      <ParticlesBackground />
       
       {/* Audio Element: Controls the volume based on state */}
       <audio ref={audioRef} autoPlay loop muted={isMuted}>
@@ -179,58 +147,30 @@ export default function Home() {
         aria-label={isMuted ? 'Unmute audio' : 'Mute audio'}
       >
         {isMuted ? (
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5 3v4M3 5h4M7 3h4m-4 4h4m0 0l5 5m-5 5v-4m4 4h-4m-4 0v-4" />
+            // Muted Speaker Icon
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.81 5 3.54 5 6.71s-2.11 5.9-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.4.05-.63zM19 12c0 .9-.23 1.74-.63 2.5l1.62 1.62C20.47 14.88 21 13.49 21 12c0-4.48-3.03-8.21-7-9.28v2.06c2.89.81 5 3.54 5 6.72zm-2.5 5c0 1.77-1.02 3.29-2.5 4.03v-2.21l2.45-2.45c.03.2.05.4.05.63zM14 3.23v2.06c2.89.81 5 3.54 5 6.71s-2.11 5.9-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
             </svg>
         ) : (
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9l1.414 1.414a9 9 0 010 12.728m-2.828-9.9l1.414 1.414a9 9 0 010 12.728M5.8 7.172a3.001 3.001 0 00-4.243 0l-1.414 1.414a3.001 3.001 0 000 4.243l1.414 1.414a3.001 3.001 0 004.243 0l1.414-1.414z" />
+            // Unmuted Speaker Icon
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.81 5 3.54 5 6.71s-2.11 5.9-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
             </svg>
         )}
       </button>
 
       {/* Main Content Container with gradient border and blur */}
       <div 
-        onClick={handleMainClick}
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-        className={`relative z-10 w-full max-w-2xl backdrop-blur-3xl ${currentTheme.containerGradient} p-6 sm:p-10 rounded-3xl shadow-3xl min-h-[500px] flex flex-col items-center justify-between overflow-hidden cursor-pointer transition-all duration-300 hover:scale-[1.01] hover:shadow-2xl`}>
+        className={`relative z-10 w-full max-w-2xl backdrop-blur-3xl ${currentTheme.containerGradient} p-6 sm:p-10 rounded-3xl shadow-3xl min-h-[500px] flex flex-col items-center justify-between overflow-hidden transition-all duration-300`}>
         
         {/* Fixed Header Content (Always Visible) */}
         <div className="flex flex-col items-center">
-            <h1 className={`text-4xl sm:text-5xl font-extrabold my-1 ${currentTheme.textColor} drop-shadow-lg font-jost`}>Salana Ijtema</h1>
-            <h1 className={`text-2xl sm:text-3xl font-extrabold mb-2 ${currentTheme.textColor} drop-shadow-lg font-jost`}>Majlis Ansarullah Bharat 2025</h1>
+            <h1 className={`text-4xl sm:text-5xl font-extrabold my-1 ${currentTheme.textColor} drop-shadow-lg font-jost`}>Local Ijtema</h1>
+            <h1 className={`text-2xl sm:text-3xl font-extrabold mb-2 ${currentTheme.textColor} drop-shadow-lg font-jost`}>Majlis Ansarullah Qadian 2025</h1>
         </div>
 
-        {/* Navigation Arrows */}
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            setCardIndex((prevIndex) => (prevIndex - 1 + totalCards) % totalCards);
-          }}
-          className={`absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full text-white/50 hover:text-white transition-colors cursor-pointer z-20 ${cardIndex === 0 ? 'opacity-30' : ''}`}
-          disabled={cardIndex === 0}
-          aria-label="Previous slide"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
-
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            setCardIndex((prevIndex) => (prevIndex + 1) % totalCards);
-          }}
-          className={`absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full text-white/50 hover:text-white transition-colors cursor-pointer z-20`}
-          aria-label="Next slide"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
-        
-        {/* Inner container for sliding cards - now with fixed width and overflow */}
+        {/* Inner container for sliding cards */}
         <div className="relative w-full h-full flex-grow overflow-hidden">
           <div 
             className="flex transition-transform duration-500 ease-in-out w-full h-full"
@@ -248,8 +188,8 @@ export default function Home() {
               </div>
               {/* Urdu Headings */}
               <div className="mt-4">
-                  <h1 style={{ fontFamily: "'Jameel Noori Nastaleeq', sans-serif" }} className={`text-6xl sm:text-7xl font-extrabold my-1 ${currentTheme.textColor} drop-shadow-lg`}>سالانہ اجتماع </h1>
-                  <h1 style={{ fontFamily: "'Jameel Noori Nastaleeq', sans-serif" }} className={`text-5xl sm:text-6xl font-extrabold my-1 ${currentTheme.textColor} drop-shadow-lg`}>مجلس انصار اللہ بھارت</h1>
+                  <h1 style={{ fontFamily: "'Jameel Noori Nastaleeq', sans-serif" }} className={`text-6xl sm:text-7xl font-extrabold my-1 ${currentTheme.textColor} drop-shadow-lg`}>لوکل اجتماع </h1>
+                  <h1 style={{ fontFamily: "'Jameel Noori Nastaleeq', sans-serif" }} className={`text-5xl sm:text-6xl font-extrabold my-1 ${currentTheme.textColor} drop-shadow-lg`}>مجلس انصار اللہ قادیان</h1>
                   <h1 className={`text-4xl sm:text-5xl font-extrabold my-1 ${currentTheme.textColor} drop-shadow-lg`}>2025</h1>
               </div>
             </div>
@@ -266,7 +206,7 @@ export default function Home() {
             {/* Card 3: Dates and Location */}
             <div className="flex-shrink-0 w-full flex flex-col items-center justify-center p-4">
               <h2 className={`text-4xl font-bold ${currentTheme.textColor} mb-6 font-jost`}>Event Details</h2>
-              <p className="text-xl sm:text-2xl font-extrabold text-amber-200 mb-2 font-lato">🗓️ Dates: 24 | 25 | 26 October 2025</p>
+              <p className="text-xl sm:text-2xl font-extrabold text-amber-200 mb-2 font-lato">🗓️ Dates: 25 | 26 | 27 | 28 September 2025</p>
               <p className="text-lg sm:text-xl font-extrabold text-gray-300 mb-6 font-lato">📍 Location: Qadian, Punjab, India</p>
               <p className="text-xl sm:text-xl leading-relaxed text-yellow-300 mb-6 font-lato">Mark your calendars for a weekend of spiritual enlightenment and brotherhood.</p>
             </div>
@@ -283,6 +223,35 @@ export default function Home() {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* The new navigation buttons container */}
+        <div className="flex items-center justify-center gap-4 mt-4">
+          {/* Back button, only visible on cards after the first */}
+          {cardIndex > 0 && (
+            <button
+              onClick={handleBackClick}
+              className={`w-12 h-12 flex items-center justify-center rounded-full transition-all duration-300 transform ${currentTheme.containerGradient} border border-white/20 hover:border-white/40 hover:scale-110`}
+              aria-label="Back"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+          )}
+          
+          {/* Next button, hidden on the last card */}
+          {!isLastCard && (
+            <button
+              onClick={handleNextClick}
+              className={`w-12 h-12 flex items-center justify-center rounded-full transition-all duration-300 transform ${currentTheme.containerGradient} border border-white/20 hover:border-white/40 hover:scale-110`}
+              aria-label="Next"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          )}
         </div>
       </div>
     </main>
