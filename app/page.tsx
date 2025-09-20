@@ -13,6 +13,8 @@ type Theme = {
   textColor: string;
   containerGradient: string;
   linkHoverBg: string; // New property for link hover effects
+  particleColor: string; // New property for particle color
+  linkHoverColor: string; // New property for link hover color
 };
 
 // Define your curated list of modern themes
@@ -24,6 +26,8 @@ const themes: Theme[] = [
     textColor: "text-indigo-200",
     containerGradient: 'bg-gradient-to-br from-indigo-950/10 to-zinc-950/10',
     linkHoverBg: 'hover:bg-indigo-700/60',
+    particleColor: "#e0e0f0", // Soft bluish-white
+    linkHoverColor: "#a0a0d0", // Muted blue
   },
   // A sleek, light silver theme with glassmorphism
   {
@@ -32,6 +36,8 @@ const themes: Theme[] = [
     textColor: "text-gray-300",
     containerGradient: 'bg-gradient-to-br from-gray-950/10 to-gray-900/10',
     linkHoverBg: 'hover:bg-gray-700/60',
+    particleColor: "#ffffff", // Pure white
+    linkHoverColor: "#cccccc", // Light gray
   },
   // A vibrant, dark teal theme with glassmorphism
   {
@@ -40,6 +46,8 @@ const themes: Theme[] = [
     textColor: "text-teal-200",
     containerGradient: 'bg-gradient-to-br from-teal-950/10 to-slate-900/10',
     linkHoverBg: 'hover:bg-teal-700/60',
+    particleColor: "#b0f0f0", // Light cyan
+    linkHoverColor: "#60d0d0", // Muted cyan
   },
   // A warm, golden theme with glassmorphism
   {
@@ -48,6 +56,8 @@ const themes: Theme[] = [
     textColor: "text-yellow-300",
     containerGradient: 'bg-gradient-to-br from-amber-950/10 to-stone-900/10',
     linkHoverBg: 'hover:bg-yellow-700/60',
+    particleColor: "#ffecb3", // Light gold
+    linkHoverColor: "#ffbf00", // Gold
   },
   {
     background: "/backgrounds/background4.jpg",
@@ -55,6 +65,8 @@ const themes: Theme[] = [
     textColor: "text-yellow-300",
     containerGradient: 'bg-gradient-to-br from-indigo-950/10 to-zinc-950/10',
     linkHoverBg: 'hover:bg-indigo-700/60',
+    particleColor: "#f0f0f0", // Off-white
+    linkHoverColor: "#cccccc", // Light gray
   },
   {
     background: "/backgrounds/background5.jpg",
@@ -62,6 +74,8 @@ const themes: Theme[] = [
     textColor: "text-yellow-300",
     containerGradient: 'bg-gradient-to-br from-indigo-950/10 to-zinc-950/10',
     linkHoverBg: 'hover:bg-indigo-700/60',
+    particleColor: "#f0f0f0",
+    linkHoverColor: "#cccccc",
   },
   {
     background: "/black-pattern.jpg",
@@ -69,6 +83,8 @@ const themes: Theme[] = [
     textColor: "text-yellow-300",
     containerGradient: 'bg-gradient-to-br from-indigo-950/10 to-zinc-950/10',
     linkHoverBg: 'hover:bg-indigo-700/60',
+    particleColor: "#f0f0f0",
+    linkHoverColor: "#cccccc",
   },
   {
     background: "/white-pattern.jpg",
@@ -76,6 +92,8 @@ const themes: Theme[] = [
     textColor: "text-yellow-300",
     containerGradient: 'bg-gradient-to-br from-indigo-950/10 to-zinc-950/10',
     linkHoverBg: 'hover:bg-indigo-700/60',
+    particleColor: "#f0f0f0",
+    linkHoverColor: "#cccccc",
   },
 ];
 
@@ -133,7 +151,10 @@ export default function Home() {
       </div>
 
       {/* Particles Background - positioned above the image and its dimming overlay */}
-      <ParticlesBackground />
+      <ParticlesBackground 
+        particleColor={currentTheme.particleColor} 
+        linkHoverColor={currentTheme.linkHoverColor}
+      />
       
       {/* Audio Element: Controls the volume based on state */}
       <audio ref={audioRef} autoPlay loop muted={isMuted}>

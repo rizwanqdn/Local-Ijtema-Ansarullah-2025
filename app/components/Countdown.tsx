@@ -1,7 +1,7 @@
 // app/components/Countdown.tsx
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 interface CountdownProps {
   targetDate: Date;
@@ -16,7 +16,7 @@ const countdownColors = [
 ];
 
 const Countdown: React.FC<CountdownProps> = ({ targetDate }) => {
-  const calculateTimeLeft = () => {
+  const calculateTimeLeft = useCallback(() => {
     const difference = +targetDate - +new Date();
     let timeLeft: { days?: number; hours?: number; minutes?: number; seconds?: number } = {};
 
@@ -29,7 +29,7 @@ const Countdown: React.FC<CountdownProps> = ({ targetDate }) => {
       };
     }
     return timeLeft;
-  };
+  }, [targetDate]); // Add targetDate as a dependency for useCallback
 
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
   const [currentColorIndex, setCurrentColorIndex] = useState(0);
@@ -41,7 +41,7 @@ const Countdown: React.FC<CountdownProps> = ({ targetDate }) => {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [targetDate]); // Add targetDate to the dependency array
+  }, [calculateTimeLeft]); // The dependency is now correct
 
   const timerComponents = Object.keys(timeLeft).map((interval) => {
     if (timeLeft[interval as keyof typeof timeLeft] === undefined) {

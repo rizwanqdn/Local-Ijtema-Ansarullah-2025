@@ -3,19 +3,23 @@
 
 import React from 'react';
 import Particles, { initParticlesEngine } from "@tsparticles/react";
-import { loadSlim } from "@tsparticles/slim"; // or 'loadFull' if you need more features
+import type { IOptions, RecursivePartial } from "@tsparticles/engine";
+import { loadSlim } from "@tsparticles/slim";
 import { useEffect, useState } from 'react';
 
-const ParticlesBackground: React.FC = () => {
+// Define the props that the component will accept
+interface ParticlesBackgroundProps {
+  particleColor: string;
+  linkHoverColor: string;
+}
+
+// Accept the props in the function signature
+const ParticlesBackground: React.FC<ParticlesBackgroundProps> = ({ particleColor, linkHoverColor }) => {
     const [init, setInit] = useState(false);
 
-    // this should be run only once per application lifetime
     useEffect(() => {
         initParticlesEngine(async (engine) => {
-            // you can initiate the tsParticles instance (engine) here, adding custom shapes or presets
-            // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
-            // starting from v2 you can also use the slim or full bundles for smaller file size
-            await loadSlim(engine); // Using loadSlim for a smaller bundle size
+            await loadSlim(engine);
         }).then(() => {
             setInit(true);
         });
@@ -26,14 +30,13 @@ const ParticlesBackground: React.FC = () => {
     };
 
     if (!init) {
-        return null; // Don't render until particles engine is initialized
+        return null;
     }
 
-    // You can customize the particles options here
-    const particlesOptions = {
+    const particlesOptions: RecursivePartial<IOptions> = {
         background: {
             color: {
-                value: "transparent", // Particles background is transparent, letting your image show through
+                value: "transparent",
             },
         },
         fpsLimit: 120,
@@ -46,7 +49,22 @@ const ParticlesBackground: React.FC = () => {
                 onHover: {
                     enable: true,
                     mode: "repulse",
+                    parallax: {
+                        enable: false,
+                        force: 2,
+                        smooth: 10,
+                    },
                 },
+                onDiv: {
+                    selectors: [],
+                    enable: false,
+                    mode: [],
+                    type: "circle",
+                },
+                resize: {
+                    enable: true,
+                    delay: 0.5,
+                }
             },
             modes: {
                 push: {
@@ -60,14 +78,13 @@ const ParticlesBackground: React.FC = () => {
         },
         particles: {
             color: {
-                // Adjust particle color to complement your themes (e.g., a light, neutral tone or a soft accent)
-                value: "#f0f0f0", // A soft white/silver
+                value: particleColor, // Use the prop here
             },
             links: {
-                color: "#cccccc", // Link color, slightly darker than particles
+                color: linkHoverColor, // Use the prop here
                 distance: 150,
                 enable: true,
-                opacity: 0.4, // Reduced link opacity
+                opacity: 0.4,
                 width: 1,
             },
             move: {
@@ -77,35 +94,95 @@ const ParticlesBackground: React.FC = () => {
                     default: "bounce",
                 },
                 random: false,
-                speed: 1, // Slower particle movement
+                speed: 1,
                 straight: false,
+                angle: {
+                    offset: 0,
+                    value: 0
+                },
+                attract: {
+                    enable: false,
+                    rotate: {
+                        x: 600,
+                        y: 1200
+                    }
+                },
+                gravity: {
+                    enable: false,
+                    acceleration: 9.81,
+                    inverse: false,
+                    maxSpeed: 50,
+                },
+                path: {
+                    clamp: true,
+                    delay: {
+                        value: 0
+                    },
+                    enable: false,
+                    generator: 'random'
+                },
+                spin: {
+                    acceleration: 0,
+                    enable: false
+                },
+                trail: {
+                    enable: false,
+                    length: 1,
+                    fill: {}
+                },
+                vibrate: false,
+                warp: false,
             },
             number: {
                 density: {
                     enable: true,
-                    area: 800,
                 },
-                value: 60, // Fewer particles
+                value: 60,
             },
             opacity: {
-                value: 0.6, // Slightly more opaque particles
+                value: 0.6,
+                animation: {
+                    enable: false,
+                    speed: 1,
+                    sync: false,
+                    startValue: "random",
+                    destroy: "none",
+                    count: 0,
+                    decay: 0,
+                    delay: 0,
+                    mode: "random"
+                },
             },
             shape: {
                 type: "circle",
+                options: {},
+                fill: true,
+                close: true,
             },
             size: {
-                value: { min: 1, max: 3 }, // Smaller particle size
+                value: { min: 1, max: 3 },
+                animation: {
+                    enable: false,
+                    speed: 40,
+                    sync: false,
+                    startValue: "random",
+                    destroy: "none",
+                    count: 0,
+                    decay: 0,
+                    delay: 0,
+                    mode: "random"
+                },
             },
         },
         detectRetina: true,
     };
 
     return (
-        <div className="absolute inset-0 z-10"> {/* z-index 10 to be above the dimmed background */}
+        <div className="absolute inset-0 z-10">
             <Particles
                 id="tsparticles"
                 particlesLoaded={particlesLoaded}
-                options={particlesOptions as any} // Cast to any to avoid type issues if options are complex
+                options={particlesOptions}
             />
         </div>
     );

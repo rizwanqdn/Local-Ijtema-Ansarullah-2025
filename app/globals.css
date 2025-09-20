@@ -83,10 +83,10 @@
 */
 @keyframes pulseGlow {
   0%, 100% {
-    box-shadow: 0 0 5px rgba(255, 255, 255, 0.2), 0 0 10px rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 5px rgba(145, 8, 8, 0.153), 0 0 10px rgba(111, 145, 8, 0.1);
   }
   50% {
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.4), 0 0 20px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 10px rgba(50, 3, 3, 0.52), 0 0 20px rgba(144, 19, 19, 0.2);
   }
 }
 
