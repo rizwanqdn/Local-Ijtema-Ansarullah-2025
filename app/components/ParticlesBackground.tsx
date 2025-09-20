@@ -3,7 +3,7 @@
 
 import React from 'react';
 import Particles, { initParticlesEngine } from "@tsparticles/react";
-import type { IOptions, RecursivePartial } from "@tsparticles/engine";
+import type { IOptions, RecursivePartial, Container } from "@tsparticles/engine";
 import { loadSlim } from "@tsparticles/slim";
 import { useEffect, useState } from 'react';
 
@@ -25,7 +25,8 @@ const ParticlesBackground: React.FC<ParticlesBackgroundProps> = ({ particleColor
         });
     }, []);
 
-    const particlesLoaded = async (container?: any): Promise<void> => {
+    // Change the type from 'any' to 'Container | undefined'
+    const particlesLoaded = async (container?: Container): Promise<void> => {
         console.log("Particles container loaded", container);
     };
 
@@ -78,10 +79,10 @@ const ParticlesBackground: React.FC<ParticlesBackgroundProps> = ({ particleColor
         },
         particles: {
             color: {
-                value: particleColor, // Use the prop here
+                value: particleColor,
             },
             links: {
-                color: linkHoverColor, // Use the prop here
+                color: linkHoverColor,
                 distance: 150,
                 enable: true,
                 opacity: 0.4,
