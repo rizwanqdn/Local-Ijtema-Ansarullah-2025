@@ -46,7 +46,7 @@ const themes: Theme[] = [
     textColor: "text-teal-200",
     containerGradient: 'bg-gradient-to-br from-teal-950/10 to-slate-900/10',
     linkHoverBg: 'hover:bg-teal-700/60',
-    particleColor: "#b0f0f0", // Light cyan
+    particleColor: "#acb75c", // Light cyan
     linkHoverColor: "#60d0d0", // Muted cyan
   },
   // A warm, golden theme with glassmorphism
@@ -74,7 +74,7 @@ const themes: Theme[] = [
     textColor: "text-yellow-300",
     containerGradient: 'bg-gradient-to-br from-indigo-950/10 to-zinc-950/10',
     linkHoverBg: 'hover:bg-indigo-700/60',
-    particleColor: "#f0f0f0",
+    particleColor: "#f1c232",
     linkHoverColor: "#cccccc",
   },
   {
@@ -83,7 +83,7 @@ const themes: Theme[] = [
     textColor: "text-yellow-300",
     containerGradient: 'bg-gradient-to-br from-indigo-950/10 to-zinc-950/10',
     linkHoverBg: 'hover:bg-indigo-700/60',
-    particleColor: "#f0f0f0",
+    particleColor: "#f9e20f",
     linkHoverColor: "#cccccc",
   },
   {
@@ -92,7 +92,7 @@ const themes: Theme[] = [
     textColor: "text-yellow-300",
     containerGradient: 'bg-gradient-to-br from-indigo-950/10 to-zinc-950/10',
     linkHoverBg: 'hover:bg-indigo-700/60',
-    particleColor: "#f0f0f0",
+    particleColor: "#5139b3",
     linkHoverColor: "#cccccc",
   },
 ];
@@ -183,7 +183,7 @@ export default function Home() {
 
       {/* Main Content Container with gradient border and blur */}
       <div 
-        className={`relative z-10 w-full max-w-2xl backdrop-blur-3xl ${currentTheme.containerGradient} p-6 sm:p-10 rounded-3xl shadow-3xl min-h-[500px] flex flex-col items-center justify-between overflow-hidden transition-all duration-300`}>
+        className={`relative z-10 w-full max-w-2xl  backdrop-blur-md border-2 border-opacity-20 border-yellow-400 ${currentTheme.containerGradient} p-6 sm:p-10 rounded-3xl shadow-3xl min-h-[500px] flex flex-col items-center justify-between overflow-hidden transition-all duration-300`}>
         
         {/* Fixed Header Content (Always Visible) */}
         <div className="flex flex-col items-center">
